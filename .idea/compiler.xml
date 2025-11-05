@@ -6,7 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Devoir_groupe_G_S_M" />
+        <module name="session03-getro_serge_midson" />
+        <module name="battle-arena" />
       </profile>
     </annotationProcessing>
   </component>
