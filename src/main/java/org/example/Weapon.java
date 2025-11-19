@@ -1,21 +1,13 @@
 package org.example;
 
 public class Weapon {
-    private final String name;
-    private  final int power;
+    private int power;
 
-
-    public Weapon(String name, int power) {
-        this.name = name;
+    public Weapon(int power) {
         this.power = power;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getPower() {
         return power;
     }
-
 }

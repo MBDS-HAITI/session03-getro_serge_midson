@@ -1,5 +1,5 @@
 package org.example;
 
 public interface Healer {
-    void heal(Character soin);
+    void heal(Character target);
 }

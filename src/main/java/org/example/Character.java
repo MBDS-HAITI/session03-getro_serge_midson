@@ -1,77 +1,43 @@
 package org.example;
 
 public abstract class Character {
-    protected final String name;
-    protected final String type;
-    protected final int maxHp;
-    protected int currentHp;
-    protected final Weapon weapon;
-    protected boolean alive = true;
+    protected String name;
+    protected int hp;
+    protected Weapon weapon;
 
-    public Character(String name, String type, int maxHp, Weapon weapon) {
+    public Character(String name, int hp, Weapon weapon) {
         this.name = name;
-        this.type = type;
-        this.maxHp = maxHp;
+        this.hp = hp;
         this.weapon = weapon;
-        this.currentHp = maxHp;
     }
 
-
-    public String getName() {return name;}
-    public String getType() {return type;}
-    public int getMaxHp() {return maxHp;}
-    public int getCurrentHp() {return currentHp;}
-    public Weapon getWeapon() {return weapon;}
-    public boolean isAlive() {return alive;}
-
-
-    public void wakeUp() {
-        System.out.println(name + " the " + type + " wakes up.");
+    public boolean isAlive() {
+        return hp > 0;
     }
 
-    public void eat() {
-        System.out.println(name + " eats to regain energy.");
+    public void receiveDamage(int damage) {
+        hp -= damage;
+        if (hp < 0) hp = 0;
+        System.out.println(name + " takes " + damage + " damage (HP: " + hp + ")");
     }
 
-    public void die() {
-        alive = false;
-        currentHp = 0;
-        System.out.println(name + " has died.");
+    public void heal(int amount) {
+        hp += amount;
+        System.out.println(name + " is healed by " + amount + " (HP: " + hp + ")");
     }
 
-    public void receiveDamage(int dmg) {
-        if (!alive) return;
-        currentHp -= dmg;
-        System.out.println(name + " receives " + dmg + " damage (HP=" + Math.max(currentHp, 0) + "/" + maxHp + ")");
-        if (currentHp <= 0) {
-            die();
-        }
+    public void attack(Character target) {
+        int damage = weapon.getPower();
+        System.out.println(name + " attacks " + target.name + " for " + damage);
+        target.receiveDamage(damage);
     }
 
-    public void receiveHeal(int amount) {
-        currentHp += amount;
-        if (currentHp > maxHp) currentHp = maxHp; // cap heal to maxHp
-        System.out.println(name + " recovers " + amount + " HP (HP=" + currentHp + "/" + maxHp + ")");
-    }
+    public abstract String getType();
 
-    public abstract void describe();
+    public String getName() { return name; }
 
-    static class Warrior extends Character implements Attacker {
-        public Warrior(String name) {
-            super(name, "Warrior", 100, new Weapon("Sword", 20));
-        }
-
-
-        @Override
-        public void attack(Character target) {
-            System.out.println();
-        }
-
-
-        @Override
-        public void describe() {
-            System.out.println(name + " - Warrior | HP: " + currentHp + "/" + maxHp + " | Weapon: " + weapon);
-        }
-
+    @Override
+    public String toString() {
+        return "[" + getType() + "] " + name + " - HP: " + hp + " - Weapon: " + weapon.getPower();
     }
 }
